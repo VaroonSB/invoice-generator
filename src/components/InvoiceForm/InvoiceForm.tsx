@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Input } from "../Input";
 
 export const InvoiceForm = () => {
@@ -47,6 +47,8 @@ export const InvoiceForm = () => {
   const amount2Ref = useRef<HTMLInputElement>(null);
   const amount3Ref = useRef<HTMLInputElement>(null);
   const amount4Ref = useRef<HTMLInputElement>(null);
+
+  const [itemCount, setItemCount] = useState(1);
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -120,49 +122,154 @@ export const InvoiceForm = () => {
   };
 
   return (
-    <form className="flex flex-col" onSubmit={submitHandler}>
-      <Input title="Invoice Number" type="text" ref={invoiceNumberRef} />
-      <Input title="Customer Name" type="text" ref={customerNameRef} />
-      <Input title="Address Line 1" type="text" ref={addressLine1Ref} />
-      <Input title="Address Line 2" type="text" ref={addressLine2Ref} />
-      <Input title="Address Line 3" type="text" ref={addressLine3Ref} />
-      <Input title="Customer GST" type="text" ref={customerGstRef} />
-      <Input title="Despatch Through" type="text" ref={despatchThroughRef} />
-      <Input title="Order Through" type="text" ref={orderThroughRef} />
-      <Input title="Order Date" type="text" ref={orderDateRef} />
+    <div className="flex flex-col justify-center w-full bg-gray-100 py-10">
+      <form
+        className="flex flex-col items-center justify-around bg-white p-8 rounded-3xl px-8 mx-4"
+        onSubmit={submitHandler}
+      >
+        <h2 className="text-2xl font-bold w-full mb-4 text-gray-700 px-8">
+          Invoice Form
+        </h2>
+        <div className="flex flex-row w-full gap-6">
+          <div className="flex-col w-1/2">
+            <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
+              <h3 className="text-xl font-semibold mb-2 text-gray-600">
+                Customer Details
+              </h3>
+              <Input
+                title="Customer Name"
+                type="text"
+                ref={customerNameRef}
+                required
+              />
+              <Input title="Address Line 1" type="text" ref={addressLine1Ref} />
+              <Input title="Address Line 2" type="text" ref={addressLine2Ref} />
+              <Input title="Address Line 3" type="text" ref={addressLine3Ref} />
+              <Input title="Customer GST" type="text" ref={customerGstRef} />
+            </section>
 
-      <Input title="HSN Code 1" type="text" ref={hsnCode1Ref} />
-      <Input title="Particular 1" type="text" ref={particular1Ref} />
-      <Input title="KG 1" type="text" ref={kg1Ref} />
-      <Input title="Rate 1" type="text" ref={rate1Ref} />
-      <Input title="Amount 1" type="text" ref={amount1Ref} />
+            <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
+              <h3 className="text-xl font-semibold mb-2 text-gray-600">
+                Tax and Total
+              </h3>
+              <Input title="SGST" type="text" ref={sgstRef} />
+              <Input title="CGST" type="text" ref={cgstRef} />
+              <Input title="IGST" type="text" ref={igstRef} />
+              <Input title="Round Off" type="text" ref={roundOffRef} />
+              <Input title="Total" type="text" ref={totalRef} required />
+              <Input
+                title="Total In Words"
+                type="text"
+                ref={totalInWordsRef}
+                required
+              />
+            </section>
+          </div>
 
-      <Input title="HSN Code 2" type="text" ref={hsnCode2Ref} />
-      <Input title="Particular 2" type="text" ref={particular2Ref} />
-      <Input title="KG 2" type="text" ref={kg2Ref} />
-      <Input title="Rate 2" type="text" ref={rate2Ref} />
-      <Input title="Amount 2" type="text" ref={amount2Ref} />
+          <div className="flex-col w-1/2">
+            <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
+              <h3 className="text-xl font-semibold mb-2 text-gray-600">
+                Invoice Number
+              </h3>
+              <Input
+                title="Invoice Number"
+                type="text"
+                ref={invoiceNumberRef}
+                required
+              />
+            </section>
 
-      <Input title="HSN Code 3" type="text" ref={hsnCode3Ref} />
-      <Input title="Particular 3" type="text" ref={particular3Ref} />
-      <Input title="KG 3" type="text" ref={kg3Ref} />
-      <Input title="Rate 3" type="text" ref={rate3Ref} />
-      <Input title="Amount 3" type="text" ref={amount3Ref} />
+            <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
+              <h3 className="text-xl font-semibold mb-2 text-gray-600">
+                Items
+              </h3>
+              <Input
+                title="HSN Code 1"
+                type="text"
+                ref={hsnCode1Ref}
+                defaultValue="38101090"
+                required
+              />
+              <Input
+                title="Particular 1"
+                type="text"
+                ref={particular1Ref}
+                defaultValue="COVER-ALL POWDER"
+                required
+              />
+              <Input title="KG 1" type="text" ref={kg1Ref} required />
+              <Input title="Rate 1" type="text" ref={rate1Ref} required />
+              <Input title="Amount 1" type="text" ref={amount1Ref} required />
 
-      <Input title="HSN Code 4" type="text" ref={hsnCode4Ref} />
-      <Input title="Particular 4" type="text" ref={particular4Ref} />
-      <Input title="KG 4" type="text" ref={kg4Ref} />
-      <Input title="Rate 4" type="text" ref={rate4Ref} />
-      <Input title="Amount 4" type="text" ref={amount4Ref} />
+              {itemCount >= 2 && (
+                <>
+                  <Input title="HSN Code 2" type="text" ref={hsnCode2Ref} />
+                  <Input
+                    title="Particular 2"
+                    type="text"
+                    ref={particular2Ref}
+                  />
+                  <Input title="KG 2" type="text" ref={kg2Ref} />
+                  <Input title="Rate 2" type="text" ref={rate2Ref} />
+                  <Input title="Amount 2" type="text" ref={amount2Ref} />
+                </>
+              )}
 
-      <Input title="SGST" type="text" ref={sgstRef} />
-      <Input title="CGST" type="text" ref={cgstRef} />
-      <Input title="IGST" type="text" ref={igstRef} />
-      <Input title="Round Off" type="text" ref={roundOffRef} />
-      <Input title="Total" type="text" ref={totalRef} />
-      <Input title="Total In Words" type="text" ref={totalInWordsRef} />
+              {itemCount >= 3 && (
+                <>
+                  <Input title="HSN Code 3" type="text" ref={hsnCode3Ref} />
+                  <Input
+                    title="Particular 3"
+                    type="text"
+                    ref={particular3Ref}
+                  />
+                  <Input title="KG 3" type="text" ref={kg3Ref} />
+                  <Input title="Rate 3" type="text" ref={rate3Ref} />
+                  <Input title="Amount 3" type="text" ref={amount3Ref} />
+                </>
+              )}
 
-      <button type="submit">Submit</button>
-    </form>
+              {itemCount >= 4 && (
+                <>
+                  <Input title="HSN Code 4" type="text" ref={hsnCode4Ref} />
+                  <Input
+                    title="Particular 4"
+                    type="text"
+                    ref={particular4Ref}
+                  />
+                  <Input title="KG 4" type="text" ref={kg4Ref} />
+                  <Input title="Rate 4" type="text" ref={rate4Ref} />
+                  <Input title="Amount 4" type="text" ref={amount4Ref} />
+                </>
+              )}
+
+              <div className="flex gap-4 mt-4">
+                <button
+                  type="button"
+                  onClick={() => setItemCount((prev) => prev + 1)}
+                  className="flex items-center justify-center w-8 h-8 border rounded-full bg-green-500 text-white hover:bg-green-600"
+                >
+                  +
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setItemCount((prev) => prev - 1)}
+                  className="flex items-center justify-center w-8 h-8 border rounded-full bg-red-500 text-white hover:bg-red-600"
+                >
+                  -
+                </button>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="mt-6 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 w-full"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
