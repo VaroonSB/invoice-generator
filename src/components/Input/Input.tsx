@@ -1,3 +1,5 @@
+"use client";
+
 import { HTMLInputTypeAttribute, RefObject } from "react";
 
 interface InputProps {
@@ -16,7 +18,7 @@ export const Input = ({
   required = false,
 }: InputProps) => {
   return (
-    <div className="flex w-full justify-between items-center px-8 py-4 bg-gray-100 rounded-lg shadow-md">
+    <div className="flex w-full justify-between items-center px-8 py-4 bg-gray-100 rounded-2xl shadow-md">
       <label className="w-2/6 text-gray-700 font-semibold" htmlFor={title}>
         {title}
       </label>

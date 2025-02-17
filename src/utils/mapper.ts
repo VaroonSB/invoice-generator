@@ -84,13 +84,14 @@ export const sheetMapper = (
   }: SheetInput,
   worksheet: Worksheet
 ) => {
-  worksheet.getCell(INVOICE_NUMBER).value = invoiceNumber;
-  worksheet.getCell(INVOICE_DATE).value = new Date().toLocaleDateString("IST", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
-  worksheet.getCell(CUSTOMER_NAME).value = customerName;
+  worksheet.getCell(INVOICE_NUMBER).value = invoiceNumber ?? "";
+  worksheet.getCell(INVOICE_DATE).value =
+    new Date().toLocaleDateString("IST", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }) ?? "";
+  worksheet.getCell(CUSTOMER_NAME).value = customerName ?? "";
   worksheet.getCell(ADDRESS_LINE_1).value = addressLine1 ?? "";
   worksheet.getCell(ADDRESS_LINE_2).value = addressLine2 ?? "";
   worksheet.getCell(ADDRESS_LINE_3).value = addressLine3 ?? "";
@@ -99,36 +100,36 @@ export const sheetMapper = (
   worksheet.getCell(ORDER_THROUGH).value = orderThrough ?? "";
   worksheet.getCell(ORDER_DATE).value = orderDate ?? "";
   items.forEach((item, index) => {
-    if (index === 1) {
+    if (index === 0) {
       worksheet.getCell(HSN_CODE_1).value = item.hsnCode ?? "";
-      worksheet.getCell(PARTICULAR_1).value = item.particular;
+      worksheet.getCell(PARTICULAR_1).value = item.particular ?? "";
       worksheet.getCell(KG_1).value = item.kg ?? "";
       worksheet.getCell(RATE_1).value = item.rate ?? "";
-      worksheet.getCell(AMOUNT_1).value = item.amount;
-    } else if (index === 2) {
+      worksheet.getCell(AMOUNT_1).value = item.amount ?? "";
+    } else if (index === 1) {
       worksheet.getCell(HSN_CODE_2).value = item.hsnCode ?? "";
-      worksheet.getCell(PARTICULAR_2).value = item.particular;
+      worksheet.getCell(PARTICULAR_2).value = item.particular ?? "";
       worksheet.getCell(KG_2).value = item.kg ?? "";
       worksheet.getCell(RATE_2).value = item.rate ?? "";
-      worksheet.getCell(AMOUNT_2).value = item.amount;
-    } else if (index === 3) {
+      worksheet.getCell(AMOUNT_2).value = item.amount ?? "";
+    } else if (index === 2) {
       worksheet.getCell(HSN_CODE_3).value = item.hsnCode ?? "";
-      worksheet.getCell(PARTICULAR_3).value = item.particular;
+      worksheet.getCell(PARTICULAR_3).value = item.particular ?? "";
       worksheet.getCell(KG_3).value = item.kg ?? "";
       worksheet.getCell(RATE_3).value = item.rate ?? "";
-      worksheet.getCell(AMOUNT_3).value = item.amount;
-    } else if (index === 4) {
+      worksheet.getCell(AMOUNT_3).value = item.amount ?? "";
+    } else if (index === 3) {
       worksheet.getCell(HSN_CODE_4).value = item.hsnCode ?? "";
-      worksheet.getCell(PARTICULAR_4).value = item.particular;
+      worksheet.getCell(PARTICULAR_4).value = item.particular ?? "";
       worksheet.getCell(KG_4).value = item.kg ?? "";
       worksheet.getCell(RATE_4).value = item.rate ?? "";
-      worksheet.getCell(AMOUNT_4).value = item.amount;
+      worksheet.getCell(AMOUNT_4).value = item.amount ?? "";
     }
   });
   worksheet.getCell(SGST).value = sgst ?? "";
   worksheet.getCell(CGST).value = cgst ?? "";
   worksheet.getCell(IGST).value = igst ?? "";
   worksheet.getCell(ROUND_OFF).value = roundOff ?? "";
-  worksheet.getCell(TOTAL).value = total;
-  worksheet.getCell(TOTAL_IN_WORDS).value = totalInWords;
+  worksheet.getCell(TOTAL).value = total ?? "";
+  worksheet.getCell(TOTAL_IN_WORDS).value = totalInWords ?? "";
 };
