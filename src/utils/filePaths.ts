@@ -8,6 +8,9 @@ export const STATIC_XLSX_INVOICE_PATH =
 export const STATIC_PDF_INVOICE_PATH =
   "/Users/varoon.balachandar/Documents/Invoices/PDF";
 
+export const CUSTOMER_DETAILS_LOCATION =
+  "/Users/varoon.balachandar/Documents/Customer/Customer.xlsx";
+
 export const getInvoiceXlsxFilePath = (input: SheetInput) => {
   const invoiceDate = new Date(input.invoiceDate);
   const invoiceDirectory = path.join(
@@ -22,6 +25,6 @@ export const getInvoiceXlsxFilePath = (input: SheetInput) => {
 
   return path.join(
     invoiceDirectory,
-    `${input.invoiceNumber}-${input.customerName}.xlsx`
+    `${input.invoiceNumber}-${input.customer.customerName}.xlsx`
   );
 };

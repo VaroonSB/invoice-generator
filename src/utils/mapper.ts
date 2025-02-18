@@ -39,14 +39,17 @@ import {
 } from "./cellNumbers";
 import { parseInvoiceDate } from "./date";
 
-export interface SheetInput {
-  invoiceNumber: number;
-  invoiceDate: string;
+export interface Customer {
   customerName: string;
   addressLine1: string;
   addressLine2: string;
   addressLine3: string;
   customerGst: string;
+}
+export interface SheetInput {
+  invoiceNumber: number;
+  invoiceDate: string;
+  customer: Customer;
   despatchThrough: string;
   orderThrough: string;
   orderDate: string;
@@ -69,11 +72,13 @@ export const sheetMapper = (
   {
     invoiceNumber,
     invoiceDate,
-    customerName,
-    addressLine1,
-    addressLine2,
-    addressLine3,
-    customerGst,
+    customer: {
+      customerName,
+      addressLine1,
+      addressLine2,
+      addressLine3,
+      customerGst,
+    },
     despatchThrough,
     orderThrough,
     orderDate,

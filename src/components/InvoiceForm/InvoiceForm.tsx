@@ -64,11 +64,13 @@ export const InvoiceForm = () => {
           invoiceNumber: invoiceNumberRef.current?.value,
           invoiceDate: invoiceDateRef.current?.value,
 
-          customerName: customerNameRef.current?.value,
-          addressLine1: addressLine1Ref.current?.value,
-          addressLine2: addressLine2Ref.current?.value,
-          addressLine3: addressLine3Ref.current?.value,
-          customerGst: customerGstRef.current?.value,
+          customer: {
+            customerName: customerNameRef.current?.value,
+            addressLine1: addressLine1Ref.current?.value,
+            addressLine2: addressLine2Ref.current?.value,
+            addressLine3: addressLine3Ref.current?.value,
+            customerGst: customerGstRef.current?.value,
+          },
 
           despatchThrough: despatchThroughRef.current?.value,
           orderThrough: orderThroughRef.current?.value,
