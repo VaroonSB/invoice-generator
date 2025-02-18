@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Workbook } from "exceljs";
 import path from "path";
 import { SheetInput, sheetMapper } from "@/utils/mapper";
+import { getInvoiceXlsxFilePath } from "@/utils/filePaths";
 
 export const POST = async (request: NextRequest) => {
   const input: SheetInput = await request.json();
@@ -14,12 +15,7 @@ export const POST = async (request: NextRequest) => {
   const invoiceSheet = workbook.worksheets[0];
   sheetMapper(input, invoiceSheet);
 
-  await workbook.xlsx.writeFile(
-    path.join(
-      "/Users/varoon.balachandar/Documents/Bills",
-      `${input.invoiceNumber}-Bill.xlsx`
-    )
-  );
+  await workbook.xlsx.writeFile(getInvoiceXlsxFilePath(input));
 
   return NextResponse.json(
     {

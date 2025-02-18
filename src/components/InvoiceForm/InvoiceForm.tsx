@@ -5,9 +5,11 @@ import { CustomerSection } from "./CustomerSection";
 import { TaxAndTotalSection } from "./TaxAndTotalSection";
 import { InvoiceNumberSection } from "./InvoiceNumberSection";
 import { ItemSection } from "./ItemSection";
+import { OrderMetadataSection } from "./OrderMetadataSection";
 
 export const InvoiceForm = () => {
   const invoiceNumberRef = useRef<HTMLInputElement>(null);
+  const invoiceDateRef = useRef<HTMLInputElement>(null);
 
   const customerNameRef = useRef<HTMLInputElement>(null);
   const addressLine1Ref = useRef<HTMLInputElement>(null);
@@ -60,6 +62,7 @@ export const InvoiceForm = () => {
         method: "POST",
         body: JSON.stringify({
           invoiceNumber: invoiceNumberRef.current?.value,
+          invoiceDate: invoiceDateRef.current?.value,
 
           customerName: customerNameRef.current?.value,
           addressLine1: addressLine1Ref.current?.value,
@@ -156,7 +159,11 @@ export const InvoiceForm = () => {
           </div>
 
           <div className="flex-col w-1/2">
-            <InvoiceNumberSection refs={{ invoiceNumberRef }} />
+            <InvoiceNumberSection refs={{ invoiceNumberRef, invoiceDateRef }} />
+
+            <OrderMetadataSection
+              refs={{ despatchThroughRef, orderThroughRef, orderDateRef }}
+            />
 
             <ItemSection
               refs={{

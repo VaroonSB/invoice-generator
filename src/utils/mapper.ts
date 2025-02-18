@@ -37,9 +37,11 @@ import {
   TOTAL,
   TOTAL_IN_WORDS,
 } from "./cellNumbers";
+import { parseInvoiceDate } from "./date";
 
 export interface SheetInput {
   invoiceNumber: number;
+  invoiceDate: string;
   customerName: string;
   addressLine1: string;
   addressLine2: string;
@@ -66,6 +68,7 @@ export interface SheetInput {
 export const sheetMapper = (
   {
     invoiceNumber,
+    invoiceDate,
     customerName,
     addressLine1,
     addressLine2,
@@ -84,13 +87,16 @@ export const sheetMapper = (
   }: SheetInput,
   worksheet: Worksheet
 ) => {
+  console.log(
+    invoiceDate,
+    parseInvoiceDate(new Date(invoiceDate)),
+    orderDate,
+    parseInvoiceDate(new Date(orderDate))
+  );
+
   worksheet.getCell(INVOICE_NUMBER).value = invoiceNumber ?? "";
   worksheet.getCell(INVOICE_DATE).value =
-    new Date().toLocaleDateString("IST", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }) ?? "";
+    parseInvoiceDate(new Date(invoiceDate)) ?? "";
   worksheet.getCell(CUSTOMER_NAME).value = customerName ?? "";
   worksheet.getCell(ADDRESS_LINE_1).value = addressLine1 ?? "";
   worksheet.getCell(ADDRESS_LINE_2).value = addressLine2 ?? "";
@@ -98,7 +104,8 @@ export const sheetMapper = (
   worksheet.getCell(CUSTOMER_GST).value = customerGst ?? "";
   worksheet.getCell(DESPATCH_THROUGH).value = despatchThrough ?? "";
   worksheet.getCell(ORDER_THROUGH).value = orderThrough ?? "";
-  worksheet.getCell(ORDER_DATE).value = orderDate ?? "";
+  worksheet.getCell(ORDER_DATE).value =
+    parseInvoiceDate(new Date(orderDate)) ?? "";
   items.forEach((item, index) => {
     if (index === 0) {
       worksheet.getCell(HSN_CODE_1).value = item.hsnCode ?? "";
@@ -132,4 +139,19 @@ export const sheetMapper = (
   worksheet.getCell(ROUND_OFF).value = roundOff ?? "";
   worksheet.getCell(TOTAL).value = total ?? "";
   worksheet.getCell(TOTAL_IN_WORDS).value = totalInWords ?? "";
+};
+
+export const SHORT_MONTH: Record<number, string> = {
+  1: "Jan",
+  2: "Feb",
+  3: "Mar",
+  4: "Apr",
+  5: "May",
+  6: "Jun",
+  7: "Jul",
+  8: "Aug",
+  9: "Sep",
+  10: "Oct",
+  11: "Nov",
+  12: "Dec",
 };
