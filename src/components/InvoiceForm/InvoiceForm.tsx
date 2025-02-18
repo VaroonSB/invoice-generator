@@ -196,7 +196,7 @@ export const InvoiceForm = () => {
 
         <button
           type="submit"
-          className="mt-6 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 w-full"
+          className="mt-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-bold rounded-full shadow-lg hover:from-blue-600 hover:to-purple-600 transform hover:scale-105 transition-transform duration-300 ease-in-out w-2/3"
         >
           Submit
         </button>

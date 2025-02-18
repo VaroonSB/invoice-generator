@@ -16,12 +16,22 @@ export const Navigation = () => {
               Generate
             </Link>
           </li>
+
           <li>
             <Link
-              href="/search"
+              href="/invoices"
               className="text-lg hover:text-gray-300 transition duration-300"
             >
-              Search
+              Invoices
+            </Link>
+          </li>
+
+          <li>
+            <Link
+              href="/customers"
+              className="text-lg hover:text-gray-300 transition duration-300"
+            >
+              Customers
             </Link>
           </li>
         </ul>
