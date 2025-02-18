@@ -56,22 +56,22 @@ export const ItemSection = ({ refs }: ItemSectionProps) => {
     <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">Items</h3>
       <Input
-        title="HSN Code 1"
+        title="HSN Code"
         type="text"
         ref={hsnCode1Ref}
         defaultValue="38101090"
         required
       />
       <Input
-        title="Particular 1"
+        title="Particular"
         type="text"
         ref={particular1Ref}
         defaultValue="COVER-ALL POWDER"
         required
       />
-      <Input title="KG 1" type="text" ref={kg1Ref} required />
-      <Input title="Rate 1" type="text" ref={rate1Ref} required />
-      <Input title="Amount 1" type="text" ref={amount1Ref} required />
+      <Input title="KG" type="text" ref={kg1Ref} required />
+      <Input title="Rate" type="text" ref={rate1Ref} required />
+      <Input title="Amount" type="text" ref={amount1Ref} required />
 
       {itemCount >= 2 && (
         <>

@@ -87,13 +87,6 @@ export const sheetMapper = (
   }: SheetInput,
   worksheet: Worksheet
 ) => {
-  console.log(
-    invoiceDate,
-    parseInvoiceDate(new Date(invoiceDate)),
-    orderDate,
-    parseInvoiceDate(new Date(orderDate))
-  );
-
   worksheet.getCell(INVOICE_NUMBER).value = invoiceNumber ?? "";
   worksheet.getCell(INVOICE_DATE).value =
     parseInvoiceDate(new Date(invoiceDate)) ?? "";

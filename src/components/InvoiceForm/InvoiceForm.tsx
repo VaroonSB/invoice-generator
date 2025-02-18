@@ -126,12 +126,12 @@ export const InvoiceForm = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center w-full bg-gray-100 py-10">
+    <div className="flex flex-col justify-center w-full bg-gray-100 py-4">
       <form
         className="flex flex-col items-center justify-around bg-white p-8 rounded-3xl px-8 mx-4"
         onSubmit={submitHandler}
       >
-        <h2 className="text-2xl font-bold w-full mb-4 text-gray-700 px-8">
+        <h2 className="flex text-2xl font-bold w-full mb-4 text-gray-700 justify-center">
           Invoice Form
         </h2>
         <div className="flex flex-row w-full gap-6">
