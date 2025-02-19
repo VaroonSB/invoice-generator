@@ -46,7 +46,7 @@ export interface Customer {
   addressLine3: string;
   customerGst: string;
 }
-export interface SheetInput {
+export interface Invoice {
   invoiceNumber: number;
   invoiceDate: string;
   customer: Customer;
@@ -89,7 +89,7 @@ export const sheetMapper = (
     roundOff,
     total,
     totalInWords,
-  }: SheetInput,
+  }: Invoice,
   worksheet: Worksheet
 ) => {
   worksheet.getCell(INVOICE_NUMBER).value = invoiceNumber ?? "";
