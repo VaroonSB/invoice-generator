@@ -1,5 +1,7 @@
 import { Customer } from "@/utils/mapper";
 import { RefObject, useState } from "react";
+import { SearchInput } from "../Input";
+import { Button } from "../Button";
 
 interface CustomerSearchProps {
   refs: {
@@ -24,7 +26,7 @@ export const CustomerSearch = ({ refs }: CustomerSearchProps) => {
 
   const searchHandler = async () => {
     try {
-      const response = await fetch("api/search/customer", {
+      const response = await fetch("api/customer/search", {
         method: "POST",
         cache: "no-cache",
         body: JSON.stringify({
@@ -48,24 +50,15 @@ export const CustomerSearch = ({ refs }: CustomerSearchProps) => {
   return (
     <>
       <div className="flex gap-2">
-        <input
-          className="w-full p-2 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-          type="text"
-          id="Search Customer"
+        <SearchInput
+          title="Search Customer"
           value={customerQuery}
-          placeholder="Search Customer"
           onChange={(event) => {
             setCustomerQuery(event.target.value);
             setCustomerList([]);
           }}
         />
-        <button
-          type="button"
-          onClick={searchHandler}
-          className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-800 text-white font-semibold rounded-2xl shadow-lg transform transition-transform hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
-        >
-          Search
-        </button>
+        <Button label="Search" onClick={searchHandler} />
       </div>
       {customerList.length > 0 && (
         <ul className="bg-white p-4 rounded-lg shadow-md">

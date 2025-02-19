@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Workbook } from "exceljs";
 import path from "path";
-import { SheetInput, sheetMapper } from "@/utils/mapper";
+import { Invoice, sheetMapper } from "@/utils/mapper";
 import { getInvoiceXlsxFilePath } from "@/utils/filePaths";
 
 export const POST = async (request: NextRequest) => {
-  const input: SheetInput = await request.json();
+  const input: Invoice = await request.json();
 
   const workbook = new Workbook();
 
