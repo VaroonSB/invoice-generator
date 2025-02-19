@@ -18,7 +18,7 @@ export const TaxAndTotalSection = ({ refs }: TaxAndTotalSectionProps) => {
   const { sgstRef, cgstRef, igstRef, roundOffRef, totalRef, totalInWordsRef } =
     refs;
   return (
-    <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
+    <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl shadow-xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">
         Tax and Total
       </h3>

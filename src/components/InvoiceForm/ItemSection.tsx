@@ -2,6 +2,7 @@
 
 import { RefObject, useState } from "react";
 import { Input } from "../Input";
+import { Button } from "../Button";
 
 interface ItemSectionProps {
   refs: {
@@ -53,7 +54,7 @@ export const ItemSection = ({ refs }: ItemSectionProps) => {
     amount4Ref,
   } = refs;
   return (
-    <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl">
+    <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl shadow-xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">Items</h3>
       <Input
         title="HSN Code"
@@ -74,13 +75,13 @@ export const ItemSection = ({ refs }: ItemSectionProps) => {
       <Input title="Amount" type="text" ref={amount1Ref} required />
 
       {itemCount >= 2 && (
-        <>
+        <div className="flex flex-col bg-white gap-4 p-4 rounded-2xl">
           <Input title="HSN Code 2" type="text" ref={hsnCode2Ref} />
           <Input title="Particular 2" type="text" ref={particular2Ref} />
           <Input title="KG 2" type="text" ref={kg2Ref} />
           <Input title="Rate 2" type="text" ref={rate2Ref} />
           <Input title="Amount 2" type="text" ref={amount2Ref} />
-        </>
+        </div>
       )}
 
       {itemCount >= 3 && (
@@ -94,30 +95,26 @@ export const ItemSection = ({ refs }: ItemSectionProps) => {
       )}
 
       {itemCount >= 4 && (
-        <>
+        <div className="flex flex-col bg-white gap-4 p-4 rounded-2xl">
           <Input title="HSN Code 4" type="text" ref={hsnCode4Ref} />
           <Input title="Particular 4" type="text" ref={particular4Ref} />
           <Input title="KG 4" type="text" ref={kg4Ref} />
           <Input title="Rate 4" type="text" ref={rate4Ref} />
           <Input title="Amount 4" type="text" ref={amount4Ref} />
-        </>
+        </div>
       )}
 
       <div className="flex gap-4 mt-4">
-        <button
-          type="button"
+        <Button
+          label="+"
           onClick={() => setItemCount((prev) => prev + 1)}
-          className="flex items-center justify-center w-8 h-8 border rounded-full bg-green-500 text-white hover:bg-green-600"
-        >
-          +
-        </button>
-        <button
-          type="button"
+          classNames="rounded-full px-3 py-1 bg-gradient-to-r from-green-500 to-green-700"
+        />
+        <Button
+          label="-"
           onClick={() => setItemCount((prev) => prev - 1)}
-          className="flex items-center justify-center w-8 h-8 border rounded-full bg-red-500 text-white hover:bg-red-600"
-        >
-          -
-        </button>
+          classNames="rounded-full px-3 py-1 bg-gradient-to-r from-red-500 to-red-700"
+        />
       </div>
     </section>
   );

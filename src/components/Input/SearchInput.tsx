@@ -15,7 +15,7 @@ export const SearchInput = ({
 }: SearchInputProps) => {
   return (
     <input
-      className="w-full p-2 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+      className="w-full p-2 border border-gray-300 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-lg"
       type={type}
       id={title}
       value={value}
