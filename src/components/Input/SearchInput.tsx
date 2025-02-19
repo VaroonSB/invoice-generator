@@ -1,4 +1,9 @@
-import { ChangeEventHandler, HTMLInputTypeAttribute, MouseEventHandler } from "react";
+import {
+  ChangeEventHandler,
+  HTMLInputTypeAttribute,
+  KeyboardEventHandler,
+  MouseEventHandler,
+} from "react";
 
 interface SearchInputProps {
   title: string;
@@ -6,6 +11,7 @@ interface SearchInputProps {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   onClick?: MouseEventHandler<HTMLInputElement> | undefined;
+  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
 }
 
 export const SearchInput = ({
@@ -13,7 +19,8 @@ export const SearchInput = ({
   type = "text",
   value,
   onChange,
-  onClick
+  onClick,
+  onKeyDown,
 }: SearchInputProps) => {
   return (
     <input
@@ -24,6 +31,8 @@ export const SearchInput = ({
       placeholder={title}
       onChange={onChange}
       onClick={onClick}
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyDown}
     />
   );
 };

@@ -5,6 +5,8 @@ import { SearchInput } from "../Input";
 import { Button } from "../Button";
 import { InvoiceList } from "../InvoiceList.tsx";
 import { useInvoice } from "@/context/InvoiceContext";
+import { CustomerSuggestion } from "../CustomerSearch";
+import { useCustomer } from "@/hooks/useCustomer";
 
 export const InvoiceSearch = () => {
   const [yearQuery, setYearQuery] = useState<string>("");
@@ -16,6 +18,8 @@ export const InvoiceSearch = () => {
     useState<boolean>(false);
 
   const { invoiceList, searchInvoice } = useInvoice();
+
+  const { customerList, setCustomerList, searchCustomer } = useCustomer();
 
   useEffect(() => {
     searchInvoice(yearQuery, monthQuery, customerQuery);
@@ -73,6 +77,12 @@ export const InvoiceSearch = () => {
             onChange={(event) => {
               setCustomerQuery(event.target.value);
             }}
+            onClick={() => {
+              searchCustomer(customerQuery);
+            }}
+            onKeyDown={() => {
+              searchCustomer(customerQuery);
+            }}
           />
           <Button
             label="Filter"
@@ -122,9 +132,19 @@ export const InvoiceSearch = () => {
               </ul>
             )}
           </div>
-          <div className="w-full"></div>
+          <div className="w-full">
+            {customerList.length > 0 && (
+              <CustomerSuggestion
+                customerList={customerList}
+                onSelectCustomer={(customer) => {
+                  setCustomerQuery(customer.customerName);
+                }}
+              />
+            )}
+          </div>
           {(showMonthSuggestion ||
             showYearSuggestion ||
+            customerList.length ||
             yearQuery ||
             customerQuery ||
             monthQuery) && (
@@ -134,6 +154,7 @@ export const InvoiceSearch = () => {
               onClick={() => {
                 setShowYearSuggestion(false);
                 setShowMonthSuggestion(false);
+                setCustomerList([]);
                 setCustomerQuery("");
                 setMonthQuery("");
                 setYearQuery("");
