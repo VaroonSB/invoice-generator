@@ -18,14 +18,14 @@ export const InvoiceList = ({
             {Object.entries(months).map(([month, invoices]) => (
               <div
                 key={month}
-                className="flex flex-col gap-4 p-4 bg-gray-200 rounded-2xl shadow-xl w-[32%]"
+                className="flex flex-col gap-4 p-4 bg-gray-200 rounded-2xl shadow-xl w-[32.1%]"
               >
                 <h4 className="text-xl font-semibold text-gray-700">{month}</h4>
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-3">
                   {invoices.map((invoice) => (
                     <Link
                       key={invoice}
-                      className="text-gray-700 bg-gray-300 hover:bg-gray-400 font-bold py-2 px-4 rounded-xl shadow-lg list-none transform transition-transform hover:scale-105"
+                      className="text-gray-700 text-sm bg-gray-300 hover:bg-gray-400 font-bold py-2 px-4 rounded-xl shadow-lg list-none transform transition-transform hover:scale-110"
                       href={invoice}
                     >
                       {invoice.replace(".xlsx", "")}

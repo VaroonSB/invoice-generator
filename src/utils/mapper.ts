@@ -47,7 +47,7 @@ export interface Customer {
   customerGst: string;
 }
 export interface Invoice {
-  invoiceNumber: number;
+  invoiceNumber: string;
   invoiceDate: string;
   customer: Customer;
   despatchThrough: string;
@@ -56,15 +56,15 @@ export interface Invoice {
   items: Array<{
     hsnCode?: string;
     particular: string;
-    kg?: number;
-    rate?: number;
-    amount: number;
+    kg?: string;
+    rate?: string;
+    amount: string;
   }>;
-  sgst: number;
-  cgst: number;
-  igst: number;
-  roundOff: number;
-  total: number;
+  sgst: string;
+  cgst: string;
+  igst: string;
+  roundOff: string;
+  total: string;
   totalInWords: string;
 }
 

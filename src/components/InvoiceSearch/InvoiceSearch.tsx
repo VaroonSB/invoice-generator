@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { SearchInput } from "../Input";
 import { Button } from "../Button";
 import { InvoiceList } from "../InvoiceList.tsx";
+import { useInvoice } from "@/context/InvoiceContext";
 
 export const InvoiceSearch = () => {
   const [yearQuery, setYearQuery] = useState<string>("");
@@ -14,38 +15,17 @@ export const InvoiceSearch = () => {
   const [showMonthSuggestion, setShowMonthSuggestion] =
     useState<boolean>(false);
 
-  const [invoiceList, setInvoiceList] = useState<
-    Array<{ year: string; month: string; name: string }>
-  >([]);
+  const { invoiceList, searchInvoice } = useInvoice();
 
   useEffect(() => {
-    searchHandler();
+    searchInvoice(yearQuery, monthQuery, customerQuery);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const searchHandler = async () => {
-    try {
-      const response = await fetch("/api/invoice/search", {
-        method: "POST",
-        cache: "no-cache",
-        body: JSON.stringify({
-          yearInput: yearQuery,
-          monthInput: monthQuery,
-          customerInput: customerQuery,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      if (response.status !== 200) {
-        throw new Error("HTTP error!");
-      }
-      const data = await response.json();
-      setInvoiceList(data.result);
-    } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred while searching the invoices.");
-    }
+  const filterHandler = async (fetchAll?: boolean) => {
+    await (fetchAll
+      ? searchInvoice("", "", "")
+      : searchInvoice(yearQuery, monthQuery, customerQuery));
   };
 
   const renderInvoices = () => {
@@ -94,7 +74,12 @@ export const InvoiceSearch = () => {
               setCustomerQuery(event.target.value);
             }}
           />
-          <Button label="Filter" onClick={searchHandler} />
+          <Button
+            label="Filter"
+            onClick={() => {
+              filterHandler();
+            }}
+          />
         </section>
         <section id="Suggestions" className="flex w-full mx-4 my-2 gap-2">
           <div className="w-full">
@@ -138,13 +123,21 @@ export const InvoiceSearch = () => {
             )}
           </div>
           <div className="w-full"></div>
-          {(showMonthSuggestion || showYearSuggestion) && (
+          {(showMonthSuggestion ||
+            showYearSuggestion ||
+            yearQuery ||
+            customerQuery ||
+            monthQuery) && (
             <Button
               label="Clear"
               classNames="h-12"
               onClick={() => {
                 setShowYearSuggestion(false);
                 setShowMonthSuggestion(false);
+                setCustomerQuery("");
+                setMonthQuery("");
+                setYearQuery("");
+                filterHandler(true);
               }}
             />
           )}

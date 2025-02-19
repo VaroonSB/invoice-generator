@@ -1,20 +1,23 @@
 "use client";
 
-import { HTMLInputTypeAttribute, RefObject } from "react";
+import { Invoice } from "@/utils/mapper";
+import { ChangeEventHandler, HTMLInputTypeAttribute } from "react";
 
 interface InputProps {
   title: string;
+  name?: keyof Invoice;
   type: HTMLInputTypeAttribute;
-  ref: RefObject<HTMLInputElement | null>;
-  defaultValue?: string;
+  value?: string;
+  onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   required?: boolean;
 }
 
 export const Input = ({
   title,
   type,
-  ref,
-  defaultValue = "",
+  name,
+  value,
+  onChange,
   required = false,
 }: InputProps) => {
   return (
@@ -27,10 +30,11 @@ export const Input = ({
         className="w-3/6 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         type={type}
         id={title}
-        ref={ref}
+        name={name}
         placeholder={`Enter ${title}`}
-        defaultValue={defaultValue}
         required={required}
+        onChange={onChange}
+        value={value}
       />
     </div>
   );

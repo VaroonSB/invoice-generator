@@ -1,17 +1,10 @@
 "use client";
 
-import { RefObject } from "react";
+import { useInvoice } from "@/context/InvoiceContext";
 import { Input } from "../Input";
 
-interface InvoiceNumberSectionProps {
-  refs: {
-    invoiceNumberRef: RefObject<HTMLInputElement | null>;
-    invoiceDateRef: RefObject<HTMLInputElement | null>;
-  };
-}
-
-export const InvoiceNumberSection = ({ refs }: InvoiceNumberSectionProps) => {
-  const { invoiceNumberRef, invoiceDateRef } = refs;
+export const InvoiceNumberSection = () => {
+  const { formData, handleChange } = useInvoice();
   return (
     <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl shadow-xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">
@@ -19,15 +12,18 @@ export const InvoiceNumberSection = ({ refs }: InvoiceNumberSectionProps) => {
       </h3>
       <Input
         title="Invoice Number"
+        name="invoiceNumber"
         type="text"
-        ref={invoiceNumberRef}
+        value={formData.invoiceNumber}
+        onChange={handleChange}
         required
       />
       <Input
         title="Invoice Date"
+        name="invoiceDate"
         type="date"
-        defaultValue={new Date().toISOString().split("T")[0]}
-        ref={invoiceDateRef}
+        value={formData.invoiceDate}
+        onChange={handleChange}
         required
       />
     </section>

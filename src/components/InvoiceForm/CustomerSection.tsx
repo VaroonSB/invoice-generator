@@ -1,47 +1,49 @@
 "use client";
 
 import { Input } from "../Input";
-import { RefObject } from "react";
 import { CustomerSearch } from "../CustomerSearch";
+import { useInvoice } from "@/context/InvoiceContext";
 
-interface CustomerSectionProps {
-  refs: {
-    customerNameRef: RefObject<HTMLInputElement | null>;
-    addressLine1Ref: RefObject<HTMLInputElement | null>;
-    addressLine2Ref: RefObject<HTMLInputElement | null>;
-    addressLine3Ref: RefObject<HTMLInputElement | null>;
-    customerGstRef: RefObject<HTMLInputElement | null>;
-  };
-}
-
-export const CustomerSection = ({ refs }: CustomerSectionProps) => {
-  const {
-    customerNameRef,
-    addressLine1Ref,
-    addressLine2Ref,
-    addressLine3Ref,
-    customerGstRef,
-  } = refs;
+export const CustomerSection = () => {
+  const { formData, handleNestedChange } = useInvoice();
 
   return (
     <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl shadow-xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">
         Customer Details
       </h3>
-      <CustomerSearch
-        refs={{
-          customerNameRef,
-          addressLine1Ref,
-          addressLine2Ref,
-          addressLine3Ref,
-          customerGstRef,
-        }}
+      <CustomerSearch />
+      <Input
+        title="Customer Name"
+        type="text"
+        value={formData.customer.customerName}
+        onChange={(e) => handleNestedChange(e, "customerName")}
+        required
       />
-      <Input title="Customer Name" type="text" ref={customerNameRef} required />
-      <Input title="Address Line 1" type="text" ref={addressLine1Ref} />
-      <Input title="Address Line 2" type="text" ref={addressLine2Ref} />
-      <Input title="Address Line 3" type="text" ref={addressLine3Ref} />
-      <Input title="Customer GST" type="text" ref={customerGstRef} />
+      <Input
+        title="Address Line 1"
+        type="text"
+        value={formData.customer.addressLine1}
+        onChange={(e) => handleNestedChange(e, "addressLine1")}
+      />
+      <Input
+        title="Address Line 2"
+        type="text"
+        value={formData.customer.addressLine2}
+        onChange={(e) => handleNestedChange(e, "addressLine2")}
+      />
+      <Input
+        title="Address Line 3"
+        type="text"
+        value={formData.customer.addressLine3}
+        onChange={(e) => handleNestedChange(e, "addressLine3")}
+      />
+      <Input
+        title="Customer GST"
+        type="text"
+        value={formData.customer.customerGst}
+        onChange={(e) => handleNestedChange(e, "customerGst")}
+      />
     </section>
   );
 };
