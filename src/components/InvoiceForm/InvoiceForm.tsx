@@ -57,7 +57,7 @@ export const InvoiceForm = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch("api/invoice", {
+      const response = await fetch("/api/invoice", {
         cache: "no-cache",
         method: "POST",
         body: JSON.stringify({

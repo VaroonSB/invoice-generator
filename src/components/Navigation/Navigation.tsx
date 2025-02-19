@@ -10,15 +10,15 @@ export const Navigation = () => {
         <ul className="flex gap-8">
           <li>
             <Link
-              href="/generate"
+              href="/invoice/create"
               className="text-lg text-white hover:text-gray-200 transition duration-300"
             >
-              Generate
+              Create
             </Link>
           </li>
           <li>
             <Link
-              href="/invoices"
+              href="/invoice/list"
               className="text-lg text-white hover:text-gray-200 transition duration-300"
             >
               Invoices
@@ -26,7 +26,7 @@ export const Navigation = () => {
           </li>
           <li>
             <Link
-              href="/customers"
+              href="/customer/search"
               className="text-lg text-white hover:text-gray-200 transition duration-300"
             >
               Customers
