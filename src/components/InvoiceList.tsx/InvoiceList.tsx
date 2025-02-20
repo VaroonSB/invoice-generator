@@ -8,7 +8,7 @@ export const InvoiceList = ({
   invoices: Record<string, Record<string, string[]>>;
 }) => {
   return (
-    <div className="flex flex-col gap-6 w-full p-4 m-4 bg-white rounded-2xl">
+    <div className="flex flex-col gap-6 p-4 mx-4 mb-8 bg-white rounded-3xl shadow-xl">
       {Object.entries(invoices).map(([year, months]) => (
         <div key={year} className="flex flex-col gap-4 w-full">
           <div className="flex items-center p-4 bg-gray-100 rounded-2xl shadow-xl">

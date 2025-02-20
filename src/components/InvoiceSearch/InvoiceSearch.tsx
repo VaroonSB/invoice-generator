@@ -7,6 +7,7 @@ import { InvoiceList } from "../InvoiceList.tsx";
 import { useInvoice } from "@/context/InvoiceContext";
 import { CustomerSuggestion } from "../CustomerSearch";
 import { useCustomer } from "@/hooks/useCustomer";
+import { DateSuggestion } from "./DateSuggestion";
 
 export const InvoiceSearch = () => {
   const [yearQuery, setYearQuery] = useState<string>("");
@@ -48,8 +49,11 @@ export const InvoiceSearch = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <section id="Filters" className="flex flex-wrap bg-gray-100">
+    <div className="flex flex-col bg-gray-100 min-h-screen gap-4">
+      <section
+        id="Filters"
+        className="flex flex-wrap rounded-3xl mt-2 mx-4 bg-white shadow-xl"
+      >
         <section id="Filter Input" className="flex gap-2 m-4 w-full">
           <SearchInput
             title="Year"
@@ -76,11 +80,9 @@ export const InvoiceSearch = () => {
             value={customerQuery}
             onChange={(event) => {
               setCustomerQuery(event.target.value);
-            }}
-            onClick={() => {
               searchCustomer(customerQuery);
             }}
-            onKeyDown={() => {
+            onClick={() => {
               searchCustomer(customerQuery);
             }}
           />
@@ -91,53 +93,38 @@ export const InvoiceSearch = () => {
             }}
           />
         </section>
-        <section id="Suggestions" className="flex w-full mx-4 my-2 gap-2">
+        <section id="Suggestions" className="flex w-full px-4 py-2 gap-2">
           <div className="w-full">
             {showYearSuggestion && (
-              <ul className="bg-white p-4 rounded-lg shadow-md">
-                {Array.from(
-                  new Set(invoiceList.map((invoice) => invoice.year))
-                ).map((value, index) => (
-                  <li
-                    key={index}
-                    className="p-4 border-b last:border-b-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
-                    onClick={() => {
-                      setYearQuery(value);
-                      setShowYearSuggestion(false);
-                    }}
-                  >
-                    <div className="font-bold text-lg">{value}</div>
-                  </li>
-                ))}
-              </ul>
+              <DateSuggestion
+                list={invoiceList}
+                filter="year"
+                onSelect={(value) => {
+                  setYearQuery(value);
+                  setShowYearSuggestion(false);
+                }}
+              />
             )}
           </div>
           <div className="w-full">
             {showMonthSuggestion && (
-              <ul className="bg-white p-4 rounded-lg shadow-md">
-                {Array.from(
-                  new Set(invoiceList.map((invoice) => invoice.month))
-                ).map((value, index) => (
-                  <li
-                    key={index}
-                    className="p-4 border-b last:border-b-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
-                    onClick={() => {
-                      setMonthQuery(value);
-                      setShowMonthSuggestion(false);
-                    }}
-                  >
-                    <div className="font-bold text-lg">{value}</div>
-                  </li>
-                ))}
-              </ul>
+              <DateSuggestion
+                list={invoiceList}
+                filter="month"
+                onSelect={(value) => {
+                  setMonthQuery(value);
+                  setShowMonthSuggestion(false);
+                }}
+              />
             )}
           </div>
           <div className="w-full">
             {customerList.length > 0 && (
               <CustomerSuggestion
-                customerList={customerList}
+                customerList={customerList.slice(0, 3)}
                 onSelectCustomer={(customer) => {
                   setCustomerQuery(customer.customerName);
+                  setCustomerList([]);
                 }}
               />
             )}

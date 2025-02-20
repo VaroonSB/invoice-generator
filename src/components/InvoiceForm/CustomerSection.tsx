@@ -12,7 +12,7 @@ export const CustomerSection = () => {
       <h3 className="text-xl font-semibold mb-2 text-gray-600">
         Customer Details
       </h3>
-      <CustomerSearch />
+      <CustomerSearch page="invoice-form" />
       <Input
         title="Customer Name"
         type="text"

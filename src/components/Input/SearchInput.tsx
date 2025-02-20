@@ -1,7 +1,6 @@
 import {
   ChangeEventHandler,
   HTMLInputTypeAttribute,
-  KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
 
@@ -11,7 +10,6 @@ interface SearchInputProps {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement> | undefined;
   onClick?: MouseEventHandler<HTMLInputElement> | undefined;
-  onKeyDown?: KeyboardEventHandler<HTMLInputElement> | undefined;
 }
 
 export const SearchInput = ({
@@ -20,7 +18,6 @@ export const SearchInput = ({
   value,
   onChange,
   onClick,
-  onKeyDown,
 }: SearchInputProps) => {
   return (
     <input
@@ -31,8 +28,6 @@ export const SearchInput = ({
       placeholder={title}
       onChange={onChange}
       onClick={onClick}
-      onKeyDown={onKeyDown}
-      onKeyUp={onKeyDown}
     />
   );
 };

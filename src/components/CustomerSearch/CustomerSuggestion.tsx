@@ -12,7 +12,7 @@ export const CustomerSuggestion = ({
       {customerList?.map((customer, index) => (
         <li
           key={index}
-          className="p-4 border-b last:border-b-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200"
+          className="p-4 border-b last:border-b-0 cursor-pointer hover:bg-gray-100 transition-colors duration-200 hover:scale-95"
           onClick={() => {
             onSelectCustomer(customer);
           }}
