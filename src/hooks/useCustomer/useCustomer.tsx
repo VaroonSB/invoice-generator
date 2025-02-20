@@ -1,3 +1,5 @@
+"use client";
+
 import { Customer } from "@/utils/mapper";
 import { useState } from "react";
 
@@ -23,7 +25,7 @@ export function useCustomer() {
       setCustomerList(data.result);
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while searching the customer.");
+      // alert("An error occurred while searching the customer.");
     }
   };
 

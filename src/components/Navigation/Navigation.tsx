@@ -26,7 +26,7 @@ export const Navigation = () => {
           </li>
           <li>
             <Link
-              href="/customer/search"
+              href="/customer/list"
               className="text-lg text-white hover:text-gray-200 transition duration-300"
             >
               Customers
