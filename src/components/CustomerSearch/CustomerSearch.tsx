@@ -22,10 +22,10 @@ export const CustomerSearch = ({
 
   useEffect(() => {
     if (isCustomerPage) {
-      searchCustomer("");
+      searchCustomer(customerQuery);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [customerQuery]);
 
   const searchHandler = async () => {
     await searchCustomer(customerQuery);
@@ -37,16 +37,22 @@ export const CustomerSearch = ({
 
   return isCustomerPage ? (
     <div className="flex flex-col gap-4 w-full">
-      <div className="flex gap-4 bg-white p-4 pb-6 rounded-3xl shadow-xl">
+      <div className="flex gap-4 bg-white p-4 min-h-[5.4rem] rounded-3xl shadow-xl text-lg">
         <SearchInput
           title="Search Customer"
           value={customerQuery}
           onChange={(event) => {
             setCustomerQuery(event.target.value);
-            setCustomerList([]);
           }}
         />
-        <Button label="Search" onClick={searchHandler} />
+        {customerQuery.length ? (
+          <Button
+            label="Clear"
+            onClick={() => {
+              setCustomerQuery("");
+            }}
+          />
+        ) : null}
       </div>
       {customerList.length > 0 && <CustomerTab customerList={customerList} />}
     </div>
