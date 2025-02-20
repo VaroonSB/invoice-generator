@@ -3,13 +3,28 @@ import { Workbook } from "exceljs";
 import { CUSTOMER_DETAILS_LOCATION } from "@/utils/filePaths";
 
 export const POST = async (request: NextRequest) => {
-  const { customerName } = await request.json();
+  const {
+    customerName,
+    addressLine1,
+    addressLine2,
+    addressLine3,
+    customerGst,
+  } = await request.json();
 
   const workbook = new Workbook();
 
   await workbook.xlsx.readFile(CUSTOMER_DETAILS_LOCATION);
   const customerSheet = workbook.worksheets[0];
-
+  if (!customerName) {
+    return NextResponse.json(
+      {
+        message: "invalid_input",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
   const customerList = customerSheet
     .getRows(2, 200)
     ?.map((row) => {
@@ -23,17 +38,35 @@ export const POST = async (request: NextRequest) => {
       };
     })
     .filter((customerDetail) => customerDetail.customerName);
-
-  const result =
-    customerName &&
-    customerList?.find((customer) =>
-      customer.customerName.toLowerCase().includes(customerName.toLowerCase())
+  const doesExist = customerList?.some(
+    (customer) =>
+      customer.customerName.toLowerCase() === customerName.toLowerCase()
+  );
+  if (doesExist) {
+    return NextResponse.json(
+      {
+        message: "already_available",
+      },
+      {
+        status: 409,
+      }
     );
+  }
+  customerSheet.addRow([
+    customerName,
+    addressLine1,
+    addressLine2,
+    addressLine3,
+    customerGst,
+  ]);
+
+  await workbook.xlsx.writeFile(
+    "/Users/varoon.balachandar/Documents/Customer/Customer.xlsx"
+  );
 
   return NextResponse.json(
     {
-      message: result ? "success" : "not_found",
-      result: result?.customerName ? [result] : customerList,
+      message: "success",
     },
     {
       status: 200,

@@ -29,9 +29,40 @@ export function useCustomer() {
     }
   };
 
+  const createCustomer = async ({
+    customerName,
+    addressLine1,
+    addressLine2,
+    addressLine3,
+    customerGst,
+  }: Customer) => {
+    try {
+      const response = await fetch("/api/customer/create", {
+        method: "POST",
+        cache: "no-cache",
+        body: JSON.stringify({
+          customerName,
+          addressLine1,
+          addressLine2,
+          addressLine3,
+          customerGst,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.status !== 200) {
+        throw new Error("HTTP error!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return {
     customerList,
     setCustomerList,
     searchCustomer,
+    createCustomer,
   };
 }

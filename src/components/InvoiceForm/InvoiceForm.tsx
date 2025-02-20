@@ -6,13 +6,29 @@ import { InvoiceNumberSection } from "./InvoiceNumberSection";
 import { ItemSection } from "./ItemSection";
 import { OrderMetadataSection } from "./OrderMetadataSection";
 import { useInvoice } from "@/context/InvoiceContext";
+import { useCustomer } from "@/hooks/useCustomer";
 
 export const InvoiceForm = () => {
-  const { createInvoice } = useInvoice();
+  const { formData, createInvoice } = useInvoice();
+  const { createCustomer } = useCustomer();
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    const {
+      customerName,
+      addressLine1,
+      addressLine2,
+      addressLine3,
+      customerGst,
+    } = formData.customer;
+    await createCustomer({
+      customerName,
+      addressLine1,
+      addressLine2,
+      addressLine3,
+      customerGst,
+    });
     await createInvoice();
   };
 
