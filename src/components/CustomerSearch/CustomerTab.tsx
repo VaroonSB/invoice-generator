@@ -6,7 +6,7 @@ export const CustomerTab = ({
   customerList: Array<Customer>;
 }) => {
   return (
-    <section className="flex flex-wrap gap-6 bg-white p-4 rounded-3xl shadow-md">
+    <section className="flex flex-wrap gap-5 bg-white p-4 rounded-3xl shadow-md">
       {customerList?.map((customer, index) => (
         <section
           key={index}
