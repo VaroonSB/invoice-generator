@@ -45,7 +45,7 @@ export const InvoiceSearch = () => {
       return acc;
     }, {} as Record<string, Record<string, string[]>>);
 
-    return <InvoiceList invoices={groupedInvoices} />;
+    return <InvoiceList invoices={groupedInvoices} invoiceList={invoiceList} />;
   };
 
   return (

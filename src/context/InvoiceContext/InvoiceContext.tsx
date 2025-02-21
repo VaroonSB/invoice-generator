@@ -6,7 +6,12 @@ import { INITIAL_INVOICE_VALUES } from "./constants";
 
 interface InvoiceContextType {
   invoice?: Invoice;
-  invoiceList: Array<{ year: string; month: string; name: string }>;
+  invoiceList: Array<{
+    year: string;
+    month: string;
+    name: string;
+    count: number;
+  }>;
   searchInvoice: (
     yearQuery: string,
     monthQuery: string,
@@ -39,7 +44,7 @@ export const InvoiceContextProvider = ({
   children: ReactNode;
 }) => {
   const [invoiceList, setInvoiceList] = useState<
-    Array<{ year: string; month: string; name: string }>
+    Array<{ year: string; month: string; name: string; count: number }>
   >([]);
 
   const [formData, setFormData] = useState<Invoice>(INITIAL_INVOICE_VALUES);
@@ -119,7 +124,7 @@ export const InvoiceContextProvider = ({
 
   const createInvoice = async () => {
     try {
-      const response = await fetch("/api/invoice", {
+      const response = await fetch("/api/invoice/create", {
         cache: "no-cache",
         method: "POST",
         body: JSON.stringify(formData),
