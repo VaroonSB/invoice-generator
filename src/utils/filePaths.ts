@@ -13,7 +13,6 @@ export const CUSTOMER_DETAILS_LOCATION =
 
 export const getInvoiceXlsxFilePath = (input: Invoice) => {
   const invoiceDate = new Date(input.invoiceDate);
-  console.log(input);
   
   const invoiceDirectory = path.join(
     STATIC_XLSX_INVOICE_PATH,

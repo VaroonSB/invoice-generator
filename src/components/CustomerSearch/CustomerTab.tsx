@@ -8,7 +8,7 @@ export const CustomerTab = ({
   return (
     <div className="flex flex-col gap-4">
       <div className="px-4 text-lg font-semibold">Total: {customerList.length}</div>
-      <section className="flex flex-wrap gap-5 bg-white p-4 rounded-3xl shadow-md">
+      <section className="flex flex-wrap gap-5 bg-white p-4 rounded-3xl shadow-xl">
         {customerList?.map((customer, index) => (
           <section
             key={index}
