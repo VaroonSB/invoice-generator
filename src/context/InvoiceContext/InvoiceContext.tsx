@@ -1,6 +1,6 @@
 "use client";
 
-import { Customer, Invoice } from "@/utils/mapper";
+import { Customer, Invoice, SHORT_MONTH } from "@/utils/mapper";
 import { createContext, ReactNode, useContext, useState } from "react";
 import { INITIAL_INVOICE_VALUES } from "./constants";
 
@@ -18,6 +18,7 @@ interface InvoiceContextType {
     customerQuery: string
   ) => Promise<void>;
   createInvoice: () => Promise<void>;
+  generatePdf: () => Promise<void>;
   formData: Invoice;
   setFormData: (value: Invoice) => void;
   setCustomerForm: (value: Customer) => void;
@@ -141,12 +142,36 @@ export const InvoiceContextProvider = ({
     }
   };
 
+  const generatePdf = async () => {
+    try {
+      const invoiceDate = new Date(formData.invoiceDate);
+      const response = await fetch("/api/invoice/pdf", {
+        cache: "no-cache",
+        method: "POST",
+        body: JSON.stringify({
+          year: invoiceDate.getFullYear().toString(),
+          month: SHORT_MONTH[invoiceDate.getMonth()],
+          invoiceName: `${formData.invoiceNumber}-${formData.customer.customerName}`,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("HTTP error!");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <InvoiceContext.Provider
       value={{
         invoiceList,
         searchInvoice,
         createInvoice,
+        generatePdf,
         formData,
         setFormData,
         setCustomerForm,

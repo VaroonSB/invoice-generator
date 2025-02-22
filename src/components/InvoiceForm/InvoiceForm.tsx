@@ -9,7 +9,7 @@ import { useInvoice } from "@/context/InvoiceContext";
 import { useCustomer } from "@/hooks/useCustomer";
 
 export const InvoiceForm = () => {
-  const { formData, createInvoice } = useInvoice();
+  const { formData, createInvoice, generatePdf } = useInvoice();
   const { createCustomer } = useCustomer();
 
   const submitHandler = async (event: React.FormEvent) => {
@@ -30,6 +30,7 @@ export const InvoiceForm = () => {
       customerGst,
     });
     await createInvoice();
+    await generatePdf();
   };
 
   return (
