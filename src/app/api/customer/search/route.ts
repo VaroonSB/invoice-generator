@@ -24,7 +24,10 @@ export const POST = async (request: NextRequest) => {
           customerGst: customerRow[4] ?? "",
         };
       })
-      .filter((customerDetail) => customerDetail.customerName) ?? [];
+      .filter((customerDetail) => customerDetail.customerName)
+      .sort(({ customerName: nameA }, { customerName: nameB }) =>
+        nameA.localeCompare(nameB)
+      ) ?? [];
 
   const fuse = new Fuse(customerList, {
     keys: ["customerName"],

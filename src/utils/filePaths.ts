@@ -2,14 +2,14 @@ import path from "path";
 import { Invoice, SHORT_MONTH } from "./mapper";
 import fs from "fs";
 
-export const STATIC_XLSX_INVOICE_PATH = "/app/xlsx";
-// "/Users/varoon.balachandar/Documents/Invoices/XLSX";
+export const STATIC_XLSX_INVOICE_PATH =
+  "/Users/varoon.balachandar/Documents/Invoices/XLSX";
 
-export const STATIC_PDF_INVOICE_PATH = "/app/pdf";
-// "/Users/varoon.balachandar/Documents/Invoices/PDF";
+export const STATIC_PDF_INVOICE_PATH =
+  "/Users/varoon.balachandar/Documents/Invoices/PDF";
 
-export const CUSTOMER_DETAILS_LOCATION = "customer";
-// "/Users/varoon.balachandar/Documents/Customer/Customer.xlsx";
+export const CUSTOMER_DETAILS_LOCATION =
+  "/Users/varoon.balachandar/Documents/Customer/Customer.xlsx";
 
 export const getInvoiceXlsxFilePath = (input: Invoice) => {
   const invoiceDate = new Date(input.invoiceDate);
