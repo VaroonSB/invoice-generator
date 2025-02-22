@@ -1,0 +1,12 @@
+services:
+  nextjs-app:
+    image: nextjs-libreoffice  # Name of the built image
+    build: .
+    ports:
+      - "3000:3000"  # Expose port 3000
+    volumes:
+      - .:/app  # Mount project directory for live updates
+      - /Users/varoon.balachandar/Documents/Invoices/XLSX:/app/xlsx
+      - /Users/varoon.balachandar/Documents/Invoices/PDF:/app/pdf
+    environment:
+      - NODE_ENV=development  # Set environment variable
