@@ -10,7 +10,7 @@ export const Navigation = () => {
         <ul className="flex gap-8">
           <li>
             <Link
-              href="/invoice/create"
+              href="/invoice/form"
               className="text-lg text-white hover:text-black transition-all hover:text-xl hover:font-semibold duration-300"
             >
               Create

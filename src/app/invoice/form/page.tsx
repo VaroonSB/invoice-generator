@@ -3,7 +3,7 @@ import { InvoiceContextProvider } from "@/context/InvoiceContext";
 
 export default function NewInvoice() {
   return (
-    <InvoiceContextProvider>
+    <InvoiceContextProvider page="create">
       <InvoiceForm />
     </InvoiceContextProvider>
   );
