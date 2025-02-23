@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Input } from "../Input";
-import { Button } from "../Button";
 import { useInvoice } from "@/context/InvoiceContext";
+import { FaMinus, FaPlus } from "react-icons/fa";
 
 export const ItemSection = () => {
   const [itemCount, setItemCount] = useState(1);
@@ -153,15 +153,13 @@ export const ItemSection = () => {
       )}
 
       <div className="flex gap-4 mt-4">
-        <Button
-          label="+"
+        <FaPlus
+          className="transition-transform hover:scale-125"
           onClick={() => setItemCount((prev) => prev + 1)}
-          classNames="rounded-full px-3 py-1 bg-gradient-to-r from-green-500 to-green-700"
         />
-        <Button
-          label="-"
+        <FaMinus
+          className="transition-transform hover:scale-125"
           onClick={() => setItemCount((prev) => prev - 1)}
-          classNames="rounded-full px-3 py-1 bg-gradient-to-r from-red-500 to-red-700"
         />
       </div>
     </section>
