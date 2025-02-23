@@ -4,3 +4,8 @@ export const parseInvoiceDate = (date: Date) => {
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 };
+
+export const parseDate = (date: string) => {
+  const [day, month, year] = date.split("-");
+  return new Date(`${year}-${month}-${day}`);
+};

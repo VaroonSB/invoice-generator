@@ -3,6 +3,8 @@ import { Workbook } from "exceljs";
 import { CUSTOMER_DETAILS_LOCATION } from "@/utils/filePaths";
 
 export const POST = async (request: NextRequest) => {
+  const searchParams = request.nextUrl.searchParams;
+  const isEdit = searchParams.get("edit") === "true";
   const {
     customerName,
     addressLine1,
@@ -42,7 +44,7 @@ export const POST = async (request: NextRequest) => {
     (customer) =>
       customer.customerName.toLowerCase() === customerName.toLowerCase()
   );
-  if (doesExist) {
+  if (doesExist && !isEdit) {
     return NextResponse.json(
       {
         message: "already_available",

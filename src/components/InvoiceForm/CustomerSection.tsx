@@ -5,14 +5,14 @@ import { CustomerSearch } from "../CustomerSearch";
 import { useInvoice } from "@/context/InvoiceContext";
 
 export const CustomerSection = () => {
-  const { formData, handleNestedChange } = useInvoice();
+  const { formData, handleNestedChange, operation } = useInvoice();
 
   return (
     <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl shadow-xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">
         Customer Details
       </h3>
-      <CustomerSearch page="invoice-form" />
+      {operation === "create" && <CustomerSearch page="invoice-form" />}
       <Input
         title="Customer Name"
         type="text"

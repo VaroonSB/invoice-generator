@@ -29,15 +29,21 @@ export function useCustomer() {
     }
   };
 
-  const createCustomer = async ({
-    customerName,
-    addressLine1,
-    addressLine2,
-    addressLine3,
-    customerGst,
-  }: Customer) => {
+  const createCustomer = async (
+    {
+      customerName,
+      addressLine1,
+      addressLine2,
+      addressLine3,
+      customerGst,
+    }: Customer,
+    isEdit: boolean
+  ) => {
     try {
-      const response = await fetch("/api/customer/create", {
+      const searchParams = new URLSearchParams({
+        edit: isEdit ? "true" : "false",
+      });
+      const response = await fetch(`/api/customer/create?${searchParams}`, {
         method: "POST",
         cache: "no-cache",
         body: JSON.stringify({

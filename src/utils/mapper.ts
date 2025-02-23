@@ -37,7 +37,7 @@ import {
   TOTAL,
   TOTAL_IN_WORDS,
 } from "./cellNumbers";
-import { parseInvoiceDate } from "./date";
+import { INITIAL_INVOICE_VALUES } from "@/context/InvoiceContext/constants";
 
 export interface Customer {
   customerName: string;
@@ -93,8 +93,7 @@ export const sheetMapper = (
   worksheet: Worksheet
 ) => {
   worksheet.getCell(INVOICE_NUMBER).value = invoiceNumber ?? "";
-  worksheet.getCell(INVOICE_DATE).value =
-    parseInvoiceDate(new Date(invoiceDate)) ?? "";
+  worksheet.getCell(INVOICE_DATE).value = invoiceDate ?? "";
   worksheet.getCell(CUSTOMER_NAME).value = customerName ?? "";
   worksheet.getCell(ADDRESS_LINE_1).value = addressLine1 ?? "";
   worksheet.getCell(ADDRESS_LINE_2).value = addressLine2 ?? "";
@@ -102,8 +101,7 @@ export const sheetMapper = (
   worksheet.getCell(CUSTOMER_GST).value = customerGst ?? "";
   worksheet.getCell(DESPATCH_THROUGH).value = despatchThrough ?? "";
   worksheet.getCell(ORDER_THROUGH).value = orderThrough ?? "";
-  worksheet.getCell(ORDER_DATE).value =
-    parseInvoiceDate(new Date(orderDate)) ?? "";
+  worksheet.getCell(ORDER_DATE).value = orderDate ?? "";
   items.forEach((item, index) => {
     if (index === 0) {
       worksheet.getCell(HSN_CODE_1).value = item.hsnCode ?? "";
@@ -137,6 +135,66 @@ export const sheetMapper = (
   worksheet.getCell(ROUND_OFF).value = roundOff ?? "";
   worksheet.getCell(TOTAL).value = total ?? "";
   worksheet.getCell(TOTAL_IN_WORDS).value = totalInWords ?? "";
+};
+
+export const invoiceMapper = (worksheet: Worksheet): Invoice => {
+  const invoice: Invoice = INITIAL_INVOICE_VALUES;
+  invoice.invoiceNumber =
+    worksheet.getCell(INVOICE_NUMBER).value?.toString() ?? "";
+  invoice.invoiceDate = worksheet.getCell(INVOICE_DATE).value?.toString() ?? "";
+  invoice.customer.customerName =
+    worksheet.getCell(CUSTOMER_NAME).value?.toString() ?? "";
+  invoice.customer.addressLine1 =
+    worksheet.getCell(ADDRESS_LINE_1).value?.toString() ?? "";
+  invoice.customer.addressLine2 =
+    worksheet.getCell(ADDRESS_LINE_2).value?.toString() ?? "";
+  invoice.customer.addressLine3 =
+    worksheet.getCell(ADDRESS_LINE_3).value?.toString() ?? "";
+  invoice.customer.customerGst =
+    worksheet.getCell(CUSTOMER_GST).value?.toString() ?? "";
+  invoice.despatchThrough =
+    worksheet.getCell(DESPATCH_THROUGH).value?.toString() ?? "";
+  invoice.orderThrough =
+    worksheet.getCell(ORDER_THROUGH).value?.toString() ?? "";
+  invoice.orderDate = worksheet.getCell(ORDER_DATE).value?.toString() ?? "";
+  invoice.items = [
+    {
+      hsnCode: worksheet.getCell(HSN_CODE_1).value?.toString() ?? "",
+      particular: worksheet.getCell(PARTICULAR_1).value?.toString() ?? "",
+      kg: worksheet.getCell(KG_1).value?.toString() ?? "",
+      rate: worksheet.getCell(RATE_1).value?.toString() ?? "",
+      amount: worksheet.getCell(AMOUNT_1).value?.toString() ?? "",
+    },
+    {
+      hsnCode: worksheet.getCell(HSN_CODE_2).value?.toString() ?? "",
+      particular: worksheet.getCell(PARTICULAR_2).value?.toString() ?? "",
+      kg: worksheet.getCell(KG_2).value?.toString() ?? "",
+      rate: worksheet.getCell(RATE_2).value?.toString() ?? "",
+      amount: worksheet.getCell(AMOUNT_2).value?.toString() ?? "",
+    },
+    {
+      hsnCode: worksheet.getCell(HSN_CODE_3).value?.toString() ?? "",
+      particular: worksheet.getCell(PARTICULAR_3).value?.toString() ?? "",
+      kg: worksheet.getCell(KG_3).value?.toString() ?? "",
+      rate: worksheet.getCell(RATE_3).value?.toString() ?? "",
+      amount: worksheet.getCell(AMOUNT_3).value?.toString() ?? "",
+    },
+    {
+      hsnCode: worksheet.getCell(HSN_CODE_4).value?.toString() ?? "",
+      particular: worksheet.getCell(PARTICULAR_4).value?.toString() ?? "",
+      kg: worksheet.getCell(KG_4).value?.toString() ?? "",
+      rate: worksheet.getCell(RATE_4).value?.toString() ?? "",
+      amount: worksheet.getCell(AMOUNT_4).value?.toString() ?? "",
+    },
+  ];
+  invoice.sgst = worksheet.getCell(SGST).value?.toString() ?? "";
+  invoice.cgst = worksheet.getCell(CGST).value?.toString() ?? "";
+  invoice.igst = worksheet.getCell(IGST).value?.toString() ?? "";
+  invoice.roundOff = worksheet.getCell(ROUND_OFF).value?.toString() ?? "";
+  invoice.total = worksheet.getCell(TOTAL).value?.toString() ?? "";
+  invoice.totalInWords =
+    worksheet.getCell(TOTAL_IN_WORDS).value?.toString() ?? "";
+  return invoice;
 };
 
 export const SHORT_MONTH: Record<number, string> = {

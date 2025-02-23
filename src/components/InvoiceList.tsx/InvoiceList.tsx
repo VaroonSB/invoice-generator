@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { getCount } from "./helper";
+import path from "path";
 
 export const InvoiceList = ({
   invoices,
@@ -21,7 +22,9 @@ export const InvoiceList = ({
         <div key={year} className="flex flex-col gap-4 w-full">
           <div className="flex items-center justify-between p-4 bg-gray-100 rounded-2xl shadow-xl">
             <h3 className="text-2xl font-bold text-gray-800">{year}</h3>
-            <h3 className="text-sm font-bold text-gray-500">{getCount(invoiceList, "year", year)}</h3>
+            <h3 className="text-sm font-bold text-gray-500">
+              {getCount(invoiceList, "year", year)}
+            </h3>
           </div>
           <div className="flex flex-wrap gap-6 px-8 py-4 w-full">
             {Object.entries(months).map(([month, invoices]) => (
@@ -42,7 +45,7 @@ export const InvoiceList = ({
                     <Link
                       key={invoice}
                       className="text-gray-700 text-sm bg-gray-300 hover:bg-gray-400 font-bold py-2 px-4 rounded-xl shadow-lg list-none transform transition-transform hover:scale-110"
-                      href={invoice}
+                      href={path.join(year, month, invoice.replace(".xlsx", ""))}
                     >
                       {invoice.replace(".xlsx", "")}
                     </Link>

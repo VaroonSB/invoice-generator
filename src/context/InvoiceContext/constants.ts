@@ -1,6 +1,8 @@
+import { parseInvoiceDate } from "@/utils/date";
+
 export const INITIAL_INVOICE_VALUES = {
   invoiceNumber: "",
-  invoiceDate: new Date().toISOString().split("T")[0],
+  invoiceDate: parseInvoiceDate(new Date()),
   customer: {
     customerName: "",
     addressLine1: "",

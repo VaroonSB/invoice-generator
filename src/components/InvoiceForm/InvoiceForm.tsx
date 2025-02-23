@@ -7,10 +7,15 @@ import { ItemSection } from "./ItemSection";
 import { OrderMetadataSection } from "./OrderMetadataSection";
 import { useInvoice } from "@/context/InvoiceContext";
 import { useCustomer } from "@/hooks/useCustomer";
+import { INITIAL_INVOICE_VALUES } from "@/context/InvoiceContext/constants";
+import { useRouter } from "next/navigation";
 
 export const InvoiceForm = () => {
-  const { formData, createInvoice, generatePdf } = useInvoice();
+  const { formData, createInvoice, generatePdf, setFormData, operation } =
+    useInvoice();
   const { createCustomer } = useCustomer();
+
+  const router = useRouter();
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -22,15 +27,20 @@ export const InvoiceForm = () => {
       addressLine3,
       customerGst,
     } = formData.customer;
-    await createCustomer({
-      customerName,
-      addressLine1,
-      addressLine2,
-      addressLine3,
-      customerGst,
-    });
+    await createCustomer(
+      {
+        customerName,
+        addressLine1,
+        addressLine2,
+        addressLine3,
+        customerGst,
+      },
+      operation === "edit"
+    );
     await createInvoice();
     await generatePdf();
+    setFormData(INITIAL_INVOICE_VALUES);
+    router.push("/");
   };
 
   return (

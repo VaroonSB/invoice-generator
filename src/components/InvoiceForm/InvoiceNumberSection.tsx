@@ -4,7 +4,8 @@ import { useInvoice } from "@/context/InvoiceContext";
 import { Input } from "../Input";
 
 export const InvoiceNumberSection = () => {
-  const { formData, handleChange } = useInvoice();
+  const { formData, handleChange, operation } = useInvoice();
+
   return (
     <section className="flex flex-col gap-4 mb-6 bg-gray-200 p-4 rounded-3xl shadow-xl">
       <h3 className="text-xl font-semibold mb-2 text-gray-600">
@@ -15,15 +16,23 @@ export const InvoiceNumberSection = () => {
         name="invoiceNumber"
         type="text"
         value={formData.invoiceNumber}
-        onChange={handleChange}
+        onChange={(e) => {
+          if (operation === "create") {
+            handleChange(e);
+          }
+        }}
         required
       />
       <Input
         title="Invoice Date"
         name="invoiceDate"
-        type="date"
+        type="text"
         value={formData.invoiceDate}
-        onChange={handleChange}
+        onChange={(e) => {
+          if (operation === "create") {
+            handleChange(e);
+          }
+        }}
         required
       />
     </section>

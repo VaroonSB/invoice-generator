@@ -1,11 +1,17 @@
 "use client";
 
 import { Customer, Invoice, SHORT_MONTH } from "@/utils/mapper";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { INITIAL_INVOICE_VALUES } from "./constants";
+import { parseDate } from "@/utils/date";
 
 interface InvoiceContextType {
-  invoice?: Invoice;
   invoiceList: Array<{
     year: string;
     month: string;
@@ -32,6 +38,7 @@ interface InvoiceContextType {
     e: React.ChangeEvent<HTMLInputElement>,
     section: keyof Invoice["customer"]
   ) => void;
+  operation: "create" | "edit";
 }
 
 // @ts-expect-error: ignore initial context creation
@@ -39,14 +46,26 @@ const InvoiceContext = createContext<InvoiceContextType>(null);
 
 export const useInvoice = () => useContext(InvoiceContext);
 
-export const InvoiceContextProvider = ({
-  children,
-}: {
+interface InvoiceContextProviderProps {
+  page: "create" | "edit";
   children: ReactNode;
-}) => {
+  year?: string;
+  month?: string;
+  invoiceName?: string;
+}
+
+export const InvoiceContextProvider = ({
+  page = "create",
+  children,
+  year,
+  month,
+  invoiceName,
+}: InvoiceContextProviderProps) => {
   const [invoiceList, setInvoiceList] = useState<
     Array<{ year: string; month: string; name: string; count: number }>
   >([]);
+
+  const [operation] = useState<"create" | "edit">(page);
 
   const [formData, setFormData] = useState<Invoice>(INITIAL_INVOICE_VALUES);
 
@@ -125,7 +144,10 @@ export const InvoiceContextProvider = ({
 
   const createInvoice = async () => {
     try {
-      const response = await fetch("/api/invoice/create", {
+      const queryParams = new URLSearchParams({
+        edit: "true",
+      });
+      const response = await fetch(`/api/invoice/create?${queryParams}`, {
         cache: "no-cache",
         method: "POST",
         body: JSON.stringify(formData),
@@ -142,9 +164,42 @@ export const InvoiceContextProvider = ({
     }
   };
 
+  const fetchInvoice = async () => {
+    try {
+      const queryParams = new URLSearchParams({
+        year: year || "",
+        month: month || "",
+        invoiceName: invoiceName || "",
+      }).toString();
+
+      const response = await fetch(`/api/invoice?${queryParams}`, {
+        cache: "no-cache",
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("HTTP error!");
+      }
+      const data = await response.json();
+      setFormData(data.result);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while submitting the form.");
+    }
+  };
+
+  useEffect(() => {
+    if (operation === "edit") {
+      void fetchInvoice();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [operation]);
+
   const generatePdf = async () => {
     try {
-      const invoiceDate = new Date(formData.invoiceDate);
+      const invoiceDate = parseDate(formData.invoiceDate);
       const response = await fetch("/api/invoice/pdf", {
         cache: "no-cache",
         method: "POST",
@@ -178,6 +233,7 @@ export const InvoiceContextProvider = ({
         handleChange,
         handleItemChange,
         handleNestedChange,
+        operation,
       }}
     >
       {children}
