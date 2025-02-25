@@ -10,6 +10,13 @@ import {
 } from "react";
 import { INITIAL_INVOICE_VALUES } from "./constants";
 import { parseDate } from "@/utils/date";
+import { toast } from "react-toastify";
+
+interface CustomResponse {
+  status: "success" | "error";
+  message?: string;
+  error?: Error;
+}
 
 interface InvoiceContextType {
   invoiceList: Array<{
@@ -23,8 +30,8 @@ interface InvoiceContextType {
     monthQuery: string,
     customerQuery: string
   ) => Promise<void>;
-  createInvoice: () => Promise<void>;
-  generatePdf: () => Promise<void>;
+  createInvoice: () => Promise<CustomResponse>;
+  generatePdf: () => Promise<CustomResponse>;
   formData: Invoice;
   setFormData: (value: Invoice) => void;
   setCustomerForm: (value: Customer) => void;
@@ -158,9 +165,16 @@ export const InvoiceContextProvider = ({
       if (!response.ok) {
         throw new Error("HTTP error!");
       }
-    } catch (error) {
+      toast.success("Invoice created successfully");
+      return {
+        status: "success",
+        message: "Invoice created successfully",
+      } as CustomResponse;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Error:", error);
-      alert("An error occurred while submitting the form.");
+      toast.error(`Invoice creation error: ${error.message}`);
+      return { status: "error", error } as CustomResponse;
     }
   };
 
@@ -184,9 +198,13 @@ export const InvoiceContextProvider = ({
       }
       const data = await response.json();
       setFormData(data.result);
-    } catch (error) {
+      toast.success("Invoice fetched");
+      return { status: "success", message: "Invoice fetched" };
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Error:", error);
-      alert("An error occurred while submitting the form.");
+      toast.error(`Invoice fetch error: ${error.message}`);
+      return { status: "error", error };
     }
   };
 
@@ -215,8 +233,16 @@ export const InvoiceContextProvider = ({
       if (!response.ok) {
         throw new Error("HTTP error!");
       }
-    } catch (error) {
+      toast.success("Invoice PDF generated");
+      return {
+        status: "success",
+        message: "Invoice PDF generated",
+      } as CustomResponse;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Error:", error);
+      toast.error(`Invoice PDF Error: ${error.message}`);
+      return { status: "error", error } as CustomResponse;
     }
   };
 

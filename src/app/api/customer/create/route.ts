@@ -54,6 +54,16 @@ export const POST = async (request: NextRequest) => {
       }
     );
   }
+  console.log(
+    "coming here",
+    customerList,
+    customerName,
+    addressLine1,
+    addressLine2,
+    addressLine3,
+    customerGst
+  );
+
   customerSheet.addRow([
     customerName,
     addressLine1,

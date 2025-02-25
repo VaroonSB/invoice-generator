@@ -2,6 +2,7 @@
 
 import { Customer } from "@/utils/mapper";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 export function useCustomer() {
   const [customerList, setCustomerList] = useState<Array<Customer>>([]);
@@ -60,8 +61,11 @@ export function useCustomer() {
       if (response.status !== 200) {
         throw new Error("HTTP error!");
       }
-    } catch (error) {
+      toast.success("Customer added successfully");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
       console.error("Error:", error);
+      toast.warning(`Customer addition failed: ${error.message}`);
     }
   };
 
