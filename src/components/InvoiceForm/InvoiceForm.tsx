@@ -20,23 +20,22 @@ export const InvoiceForm = () => {
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const {
-      customerName,
-      addressLine1,
-      addressLine2,
-      addressLine3,
-      customerGst,
-    } = formData.customer;
-    await createCustomer(
-      {
+    if (operation === "create") {
+      const {
         customerName,
         addressLine1,
         addressLine2,
         addressLine3,
         customerGst,
-      },
-      operation === "edit"
-    );
+      } = formData.customer;
+      await createCustomer({
+        customerName,
+        addressLine1,
+        addressLine2,
+        addressLine3,
+        customerGst,
+      });
+    }
     const { status } = await createInvoice();
     if (status === "error") {
       return;

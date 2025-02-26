@@ -145,7 +145,7 @@ export const InvoiceContextProvider = ({
       setInvoiceList(data.result);
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while searching the invoices.");
+      toast.error("An error occurred while searching the invoices.");
     }
   };
 

@@ -10,7 +10,6 @@ export const GET = async (request: NextRequest) => {
   const year = searchParams.get("year");
   const month = searchParams.get("month");
   const invoiceName = decodeURIComponent(searchParams.get("invoiceName") ?? "");
-  console.log(year, month, invoiceName);
 
   if (!year || !month || !invoiceName) {
     return NextResponse.json({ error: "Bad Request" }, { status: 400 });

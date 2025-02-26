@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Workbook } from "exceljs";
 import { CUSTOMER_DETAILS_LOCATION } from "@/utils/filePaths";
+import { Customer } from "@/utils/mapper";
 
 export const POST = async (request: NextRequest) => {
-  const searchParams = request.nextUrl.searchParams;
-  const isEdit = searchParams.get("edit") === "true";
   const {
     customerName,
     addressLine1,
@@ -27,24 +26,27 @@ export const POST = async (request: NextRequest) => {
       }
     );
   }
-  const customerList = customerSheet
-    .getRows(2, 200)
-    ?.map((row) => {
-      const customerRow = (row.values as string[]).slice(1);
-      return {
-        customerName: customerRow[0] ?? "",
-        addressLine1: customerRow[1] ?? "",
-        addressLine2: customerRow[2] ?? "",
-        addressLine3: customerRow[3] ?? "",
-        customerGst: customerRow[4] ?? "",
-      };
-    })
-    .filter((customerDetail) => customerDetail.customerName);
+
+  let customerList: Customer[] = [];
+  customerSheet.eachRow((row) => {
+    const customerRow = (row.values as string[]).slice(1);
+    customerList.push({
+      customerName: customerRow[0] ?? "",
+      addressLine1: customerRow[1] ?? "",
+      addressLine2: customerRow[2] ?? "",
+      addressLine3: customerRow[3] ?? "",
+      customerGst: customerRow[4] ?? "",
+    });
+  });
+
+  customerList = customerList.filter(
+    (customerDetail) => customerDetail.customerName
+  );
   const doesExist = customerList?.some(
     (customer) =>
       customer.customerName.toLowerCase() === customerName.toLowerCase()
   );
-  if (doesExist && !isEdit) {
+  if (doesExist) {
     return NextResponse.json(
       {
         message: "already_available",
@@ -54,15 +56,6 @@ export const POST = async (request: NextRequest) => {
       }
     );
   }
-  console.log(
-    "coming here",
-    customerList,
-    customerName,
-    addressLine1,
-    addressLine2,
-    addressLine3,
-    customerGst
-  );
 
   customerSheet.addRow([
     customerName,
