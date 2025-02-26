@@ -37,7 +37,10 @@ export const InvoiceForm = () => {
       },
       operation === "edit"
     );
-    await createInvoice();
+    const { status } = await createInvoice();
+    if (status === "error") {
+      return;
+    }
     await generatePdf();
     setFormData(INITIAL_INVOICE_VALUES);
     router.push("/");

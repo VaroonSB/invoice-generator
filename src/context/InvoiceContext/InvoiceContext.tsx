@@ -54,7 +54,7 @@ const InvoiceContext = createContext<InvoiceContextType>(null);
 export const useInvoice = () => useContext(InvoiceContext);
 
 interface InvoiceContextProviderProps {
-  page: "create" | "edit";
+  page?: "create" | "edit";
   children: ReactNode;
   year?: string;
   month?: string;
