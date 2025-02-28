@@ -12,8 +12,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { Button } from "../Button";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useAppContext } from "@/context/AppContext";
 
 export const InvoiceForm = () => {
+  const { setLoader } = useAppContext();
   const { formData, createInvoice, generatePdf, setFormData, operation } =
     useInvoice();
   const { createCustomer } = useCustomer();
@@ -27,6 +29,7 @@ export const InvoiceForm = () => {
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    setLoader(true);
     if (operation === "create") {
       const {
         customerName,
@@ -53,6 +56,7 @@ export const InvoiceForm = () => {
       setPrint(false);
       toast.warning("PDF not generated. Hence, Print is not available");
     }
+    setLoader(false);
   };
 
   return (

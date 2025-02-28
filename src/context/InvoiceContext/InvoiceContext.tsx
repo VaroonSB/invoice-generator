@@ -11,6 +11,7 @@ import {
 import { INITIAL_INVOICE_VALUES } from "./constants";
 import { parseDate } from "@/utils/date";
 import { toast } from "react-toastify";
+import { useAppContext } from "../AppContext";
 
 interface CustomResponse {
   status: "success" | "error";
@@ -71,6 +72,8 @@ export const InvoiceContextProvider = ({
   const [invoiceList, setInvoiceList] = useState<
     Array<{ year: string; month: string; name: string; count: number }>
   >([]);
+
+  const { setLoader } = useAppContext();
 
   const [operation] = useState<"create" | "edit">(page);
 
@@ -209,9 +212,13 @@ export const InvoiceContextProvider = ({
   };
 
   useEffect(() => {
-    if (operation === "edit") {
-      void fetchInvoice();
-    }
+    (async () => {
+      setLoader(true);
+      if (operation === "edit") {
+        await fetchInvoice();
+      }
+      setLoader(false);
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [operation]);
 

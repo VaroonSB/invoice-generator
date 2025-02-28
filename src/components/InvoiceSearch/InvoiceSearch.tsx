@@ -8,8 +8,11 @@ import { useInvoice } from "@/context/InvoiceContext";
 import { CustomerSuggestion } from "../CustomerSearch";
 import { useCustomer } from "@/hooks/useCustomer";
 import { DateSuggestion } from "./DateSuggestion";
+import { useAppContext } from "@/context/AppContext";
 
 export const InvoiceSearch = () => {
+  const { setLoader } = useAppContext();
+
   const [yearQuery, setYearQuery] = useState<string>("");
   const [monthQuery, setMonthQuery] = useState<string>("");
   const [customerQuery, setCustomerQuery] = useState<string>("");
@@ -23,14 +26,20 @@ export const InvoiceSearch = () => {
   const { customerList, setCustomerList, searchCustomer } = useCustomer();
 
   useEffect(() => {
-    searchInvoice(yearQuery, monthQuery, customerQuery);
+    (async () => {
+      setLoader(true);
+      await searchInvoice(yearQuery, monthQuery, customerQuery);
+      setLoader(false);
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filterHandler = async (fetchAll?: boolean) => {
+    setLoader(true);
     await (fetchAll
       ? searchInvoice("", "", "")
       : searchInvoice(yearQuery, monthQuery, customerQuery));
+    setLoader(false);
   };
 
   const renderInvoices = () => {

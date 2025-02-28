@@ -7,12 +7,14 @@ import { useCustomer } from "@/hooks/useCustomer";
 import { useInvoice } from "@/context/InvoiceContext";
 import { CustomerSuggestion } from "./CustomerSuggestion";
 import { CustomerTab } from "./CustomerTab";
+import { useAppContext } from "@/context/AppContext";
 
 export const CustomerSearch = ({
   page,
 }: {
   page: "customer-page" | "invoice-search" | "invoice-form";
 }) => {
+  const { setLoader } = useAppContext();
   const [customerQuery, setCustomerQuery] = useState<string>("");
 
   const { customerList, setCustomerList, searchCustomer } = useCustomer();
@@ -21,18 +23,28 @@ export const CustomerSearch = ({
   const isCustomerPage = page === "customer-page";
 
   useEffect(() => {
-    if (isCustomerPage) {
-      searchCustomer(customerQuery);
-    }
+    const handler = setTimeout(async () => {
+      if (isCustomerPage) {
+        setLoader(true);
+        await searchCustomer(customerQuery);
+        setLoader(false);
+      }
+    }, 700);
+
+    return () => {
+      clearTimeout(handler);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customerQuery]);
 
   const searchHandler = async () => {
+    setLoader(true);
     await searchCustomer(customerQuery);
     if (page === "invoice-form" || page === "invoice-search") {
       setCustomerList((prev) => prev.slice(0, 3));
     }
     setCustomerQuery("");
+    setLoader(false);
   };
 
   return isCustomerPage ? (
