@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import { Navigation } from "@/components/Navigation";
 import { AppContextProvider } from "@/context/AppContext";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
