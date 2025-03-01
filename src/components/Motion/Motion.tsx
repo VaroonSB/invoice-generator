@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimationControls, ForwardRefComponent, HTMLMotionProps, motion, TargetAndTransition, VariantLabels } from "framer-motion";
+import { AnimationControls, motion, TargetAndTransition, VariantLabels } from "framer-motion";
 import { ElementType, ReactNode } from "react";
 
 interface MotionProps {
