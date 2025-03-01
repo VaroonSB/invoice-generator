@@ -1,13 +1,23 @@
 "use client";
 
-import { AnimationControls, motion, TargetAndTransition, VariantLabels } from "framer-motion";
+import {
+  AnimationControls,
+  motion,
+  TargetAndTransition,
+  VariantLabels,
+} from "framer-motion";
 import { ElementType, ReactNode } from "react";
 
 interface MotionProps {
   tag?: ElementType;
   children: ReactNode;
   initial?: boolean | TargetAndTransition | VariantLabels | undefined;
-  animate?: boolean | TargetAndTransition | VariantLabels | AnimationControls | undefined;
+  animate?:
+    | boolean
+    | TargetAndTransition
+    | VariantLabels
+    | AnimationControls
+    | undefined;
   transition: object;
   className?: string;
 }
@@ -22,7 +32,12 @@ export const Motion = ({
 }: MotionProps) => {
   const MotionContainer = motion(tag);
   return (
-    <MotionContainer initial={initial} animate={animate} transition={transition} className={className}>
+    <MotionContainer
+      initial={initial}
+      animate={animate}
+      transition={transition}
+      className={className}
+    >
       {children}
     </MotionContainer>
   );
