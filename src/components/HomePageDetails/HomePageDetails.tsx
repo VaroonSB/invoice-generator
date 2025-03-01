@@ -12,7 +12,7 @@ export const HomePageDetails = () => {
 
   return (
     <Motion
-    className="w-full flex flex-col items-center justify-center bg-white p-8 rounded-3xl mt-12 shadow-lg h-48"
+    className="w-full flex items-center justify-center bg-white p-8 rounded-3xl mt-12 shadow-lg h-48"
     transition={{ delay: 1.2, duration: 0.8, ease: "easeOut" }}
     >
       <div className="flex flex-wrap justify-center items-center gap-12">
