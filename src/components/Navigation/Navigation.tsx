@@ -1,9 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export const Navigation = () => {
+  const pathname = usePathname();
+  if (pathname === "/") return null;
+
   return (
     <header className="flex w-full justify-between items-center p-6 bg-gradient-to-r from-yellow-500 to-rose-800 shadow-lg">
-      <Link className="text-3xl font-bold text-white hover:text-black transition-all hover:text-4xl duration-300" href="/">
+      <Link
+        className="text-3xl font-bold text-white hover:text-black transition-all hover:text-4xl duration-300"
+        href="/"
+      >
         K R Manufacture
       </Link>
       <nav>
